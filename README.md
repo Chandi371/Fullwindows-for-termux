@@ -62,3 +62,38 @@ Ensure you have at least 5GB of free storage for smooth installation.
 
 This script should now be **fully optimized and error-free**. Let me know if you need any tweaks!
 
+if you wanna play games there is no built in game controls are there for this script instead use controller for adding controller follow these steps
+1. Install Gamepad Support Packages
+
+apt install joystick jstest-gtk -y
+
+joystick → Basic driver support
+
+jstest-gtk → GUI tool to test & configure
+
+
+
+2. Enable Controller Support in Wine (For Windows Games)
+
+winetricks xinput
+
+This installs XInput, which is used for Xbox controllers in Windows games.
+
+If a game supports controllers, it should work after this.
+
+
+
+3. Use antimicrox (Gamepad to Keyboard Mapping)
+
+apt install antimicrox -y
+
+Lets you map buttons to keyboard keys (e.g., set joystick to arrow keys).
+
+
+
+4. Check If Your Controller is Recognized
+
+ls /dev/input
+
+If no device shows up, your controller might not be detected in Termux/Proot.
+if not listed complain a issue
