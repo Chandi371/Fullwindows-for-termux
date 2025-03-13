@@ -13,7 +13,7 @@ This script installs a complete Windows-like environment in Termux using:
 
 3. Download the script:
 
-wget https://raw.githubusercontent.com/Chandi371/Fullwindows-for-termux/main/win.sh
+wget https://github.com/Chandi371/Fullwindows-for-termux/blob/main/win.sh
 
 
 4. Make it executable:
