@@ -31,37 +31,26 @@ proot-distro install debian
 clear
 
 # STEP 4: LOG INTO DEBIAN AND INSTALL EVERYTHING INSIDE
-echo "Entering Debian and installing MATE, Wine, Box86/Box64..."
+echo "Entering Debian and installing MATE, Wine, Box86/Box64, and Steam..."
 proot-distro login debian --shared-tmp -- bash -c "
-apt update && apt upgrade -y && apt --fix-broken install -y
-clear
+apt update && apt upgrade -y
+apt install -y mate-desktop-environment mate-terminal pcmanfm thunar 
 
 # ENABLE i386 ARCHITECTURE
 dpkg --add-architecture i386
 apt update
-clear
-
-# INSTALL MATE DESKTOP
-apt install mate-desktop-environment mate-session-manager mate-panel mate-themes mate-terminal mate-control-center -y
-clear
 
 # INSTALL VNC SERVER
 apt install tigervnc-standalone-server -y
-clear
 
 # INSTALL WINE
 apt install wine -y
-clear
 
-# INSTALL BOX86 & BOX64 (Download Precompiled Binaries)
-wget -O /usr/local/bin/box86 https://github.com/ptitSeb/box86/releases/latest/download/box86
-wget -O /usr/local/bin/box64 https://github.com/ptitSeb/box64/releases/latest/download/box64
-chmod +x /usr/local/bin/box86 /usr/local/bin/box64
-clear
+# INSTALL BOX86 & BOX64
+apt install box86 box64 -y
 
 # INSTALL XDG UTILS FOR DOUBLE-CLICK SUPPORT
 apt install xdg-utils -y
-clear
 
 # SETTING UP DOUBLE-CLICK SUPPORT FOR .EXE FILES
 echo '[Desktop Entry]' > ~/.local/share/applications/wine.desktop
@@ -71,7 +60,10 @@ echo 'Type=Application' >> ~/.local/share/applications/wine.desktop
 echo 'MimeType=application/x-ms-dos-executable;' >> ~/.local/share/applications/wine.desktop
 chmod +x ~/.local/share/applications/wine.desktop
 xdg-mime default wine.desktop application/x-ms-dos-executable
-clear
+
+# INSTALL STEAM
+wget -O steamsetup.exe https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe
+wine steamsetup.exe
 
 # CONFIGURE VNC SERVER FOR MATE
 mkdir -p ~/.vnc
@@ -80,11 +72,10 @@ echo 'export DISPLAY=:1' >> ~/.vnc/xstartup
 echo 'export XDG_RUNTIME_DIR=/tmp' >> ~/.vnc/xstartup
 echo 'mate-session &' >> ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
-clear
 
-echo 'Setup inside Debian complete!'
-"
+echo 'Pre-installed apps added: CMD, Notepad, File Manager, Steam'
 clear
+"
 
 # STEP 5: FIX NETWORK ISSUES
 echo "Fixing potential network issues..."
@@ -101,4 +92,5 @@ echo "Setup complete! You can now connect to your MATE desktop using a VNC viewe
 echo "Run the following command anytime to start your GUI:"
 echo "    proot-distro login debian --shared-tmp -- vncserver"
 echo "To run Windows apps, just double-click the .exe file in MATE!"
+echo "To open CMD, run: wineconsole cmd"
 clear
